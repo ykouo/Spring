@@ -1,59 +1,61 @@
-Spring 설치 
-=======================================
-1. 스프링부트 
-2. 플러그인 ★사용
-3. a to z 
-=======================================
-Help-eclipseMarketplace - Spring검색 - 
+[ Spring 설치 ]  
+--------------------------------------
+① 스프링부트 
+② 플러그인 ★사용
+③ a to z 
+======================================
+Help → eclipseMarketplace → Spring검색 →
 ① SpringTool3 (있으면 ) install  
-② SpringTool3 (없으면) -Help-InstallnewSoftware- Add - 
-Name=STS / 
-Loacation = https://dist.springsource.com/snapshot/TOOLS/nightly/e4.18
-입력 - SelectAll - Next클릭 
+② SpringTool3 (없으면) → Help-InstallnewSoftware → Add →
+Name = STS 
+Loacation = https://dist.springsource.com/snapshot/TOOLS/nightly/e4.18 
+→ SelectAll → next 클릭 
 
-45~55% 설치되면 라이센스 확인창이 뜸 - accept agree 동의
-
-이클립스 재시작하라는 안내문구 --> 재시작
-PC재시작시에는 선생님께 말하고 나갔다오기
-========================================
-설치확인 방법 
-========================================
-① window-preperence - [Spring] 이 보임
-② projectExplore 우클릭 - new - other - Spring legacy project 있어야함  
-========================================
-ProjectExplore-우클릭 - new - other - SpringLagacyProject 
-- next - ProjectName입력 - Spring MVCproject선택후 - next - level설정 (보통 3단계 ex> com.kim.app) - 기본적으로 controller를 제공
------------------------------------------------------------------
++ 45~55% 설치되면 라이센스 확인창이 뜸 - accept agree 동의
+ 
+======================================
+[ 설치확인 방법 ]
+======================================
+① window → preperence → [Spring] 이 보임
+② projectExplore 우클릭 → new → other → Spring legacy project 있어야함  
+======================================
+ProjectExplore → 우클릭 → new → other → SpringLagacyProject 
+→ next → ProjectName입력 → Spring MVCproject 선택 후   
+→ next → level설정 (보통 3단계 ex) com.kim.app) → 기본적으로 controller를 제공
+--------------------------------------
 ** 
-만약 , ① window-preperence - [Spring] 이 보이는데 
+만약 , ① window → preperence → [Spring] 이 보이는데 
 SpringLagacyProject가 없다면 
 EclipseMarket에 들어가서 Spring Tools 3 Add-On for Tools 4.3.9.18.RELEASE 를 Installed한다.
 =======================================
-cmd창에서 java -version  명령어로 자바 버전 확인 -
-프로젝트 우클릭 properties - ProjectFacets 에서 자바 버전 설정, Runtimes들어가서 서버 연결 하고 Apply - Apply and Close
-
-======================================
+cmd창에서 java -version  명령어로 자바 버전 확인 →
+프로젝트 우클릭 properties → ProjectFacets 에서 자바 버전 설정, Runtimes들어가서 서버 연결 하고 Apply 
+→ Apply and Close
+=======================================
 src/main/resources 
-----------------------------------------------------------------* METAINF날리고 log4.xml만 있도록
-
-* 우클릭 -new-other-spring 검색 - springBeanConfigulation file선택-applicationContext.xml 이름 입력후 - finish 
+--------------------------------------
+* METAINF날리고 log4.xml만 있도록
+* 우클릭 → new → other → spring 검색  → springBeanConfigulation file선택 
+→ applicationContext.xml 이름 입력후 → finish 
 
 ** applicationContext.xml파일에서 NameSpace가 안뜬다?
---> 직접 입력하면 됨
+⇒ 직접 입력하면 됨
 ======================================
 webapp 
-----------------------------------------------------------------
+--------------------------------------
 WEBINF에 web.xml있는지확인 / Spring, View 제거
 ======================================
 web.xml
----------------------------------------------------------------- 
-wep-app 루트 엘리먼트를 제외한 나머지 요소 삭제 
+--------------------------------------
+<wep-app> 루트 엘리먼트를 제외한 나머지 요소 삭제 
+
 ======================================
 pom.xml 
-----------------------------------------------------------------<org.springframework-version>4.2.4.RELEASE</org.springframework-version>
-------------------------------------------
-로 변경 후 - Project 우클릭 - maven -  updateProject - 
-완료후 Libraries에서 Maven Dependency - spring~4.2.4로 변경되었는지 확인
+--------------------------------------
+<org.springframework-version>4.2.4.RELEASE</org.springframework-version>
+--------------------------------------
+로 변경 후 → Project 우클릭 → maven → updateProject 
+→ 완료후 Libraries에서 Maven Dependency → spring~4.2.4로 변경되었는지 확인
 ======================================
 
 
