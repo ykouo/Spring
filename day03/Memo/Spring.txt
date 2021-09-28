@@ -1,0 +1,28 @@
+Spring 기초     ★★★★★★★★★★★ 매우매우 중요 
+
+IoC , AOP 를 제공하는 경량의 프레임워크 
+
+IoC를 지원하는 컨테이너 == IoC컨테이너 
+==> 제어의 역행 : 객체를 어떻게 관리할지에 대한 설정파일이 필요 
+==> Servlet 컨테이너도 IoC컨테이너 
+	1. 서블릿클래스 --인스턴스화-->객체
+	ex) FrontController에서 실행되는 doGet()메서드를 실행하려면 new FrontController가 있어야하는데
+	우리는 new FrontController를 한적이 없다! 그런데 doGet()메서드가 실행된다? 그럼 언제 객체를 만들었을까?
+	미리 설정해놓은 web.xml에서 do
+	2. web.xml 
+	
+스프링컨테이너가 관리할 클래스를 등록할 설정파일 == applicationContext.xml 
+<beans>루트 엘리먼트 안에 <bean>를 넣을수 있다.
+
+
+
+-------------------------------------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean class = "test.Test" id="test"/> // 클래스의 객체생성  Test test = new Test();
+
+</beans>
+-------------------------------------------------------------------------------------	
