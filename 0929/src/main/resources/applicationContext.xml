@@ -30,7 +30,7 @@
 	</bean>
 <!--  =================================================================================================== -->	
 	<bean class = "car.Hyundae" id = "hy">
-		<constructor-arg ref="hk"></constructor-arg>
+		<constructor-arg ref="kk"></constructor-arg>
 	</bean>
 	<bean class = "car.Kia" id="kia">
 		<constructor-arg ref="kk"></constructor-arg>
@@ -38,5 +38,5 @@
 	
 	<bean class="car.HyundaeKey" id="hk"/>
 	<bean class="car.KiaKey" id="kk"/>
-	<bean class="car.Kia" id ="k"/>
+	
 </beans>
