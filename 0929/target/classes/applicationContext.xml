@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- <bean class="test.Test" id="test" init-method="initFunc"/> --> <!--  해당 method 함수를 실행한다.  --> 
+	<bean class="test.Test" id="test" /> <!-- scope="singleton"-->
+	<!-- scope = "prototype"  프로토타입 : 요청할때마다 객체를 생성해줌 -->
+	<!-- <bean class="test.Test" id="test" lazy-init="true"/> -->
+	
+	
+	<!--  인자가 있는 생성자를 사용할 때  -->
+	<bean class ="phone.GaPhone" id="phone">
+		<constructor-arg ref="sw"></constructor-arg> <!--  태그바디안에 인자로 받아올 내용을 적는다. -->
+		<!-- 현재 코드에서는  SmartWatch를 인자로 받을것이기 때문에 SmartWatch bean을 생성한다.-->
+	</bean>
+	
+	<bean class="phone.SmartWatch" id="sw"/>
+	
+	<bean class = "phone.IPhone" id="iPhone"/>
+
+	<bean class = "phone.IPhone" id="iPhone2">
+		<constructor-arg ref="aw"></constructor-arg>
+	</bean>
+	<bean class = "phone.AppleWatch" id="aw"/>
+
+	<bean class= "phone.GaPhone" id="phone2">
+		<constructor-arg ref="sw"></constructor-arg>
+		<constructor-arg value="사용자이름"></constructor-arg>
+	</bean>
+<!--  =================================================================================================== -->	
+	<bean class = "car.Hyundae" id = "hy">
+		<constructor-arg ref="hk"></constructor-arg>
+	</bean>
+	<bean class = "car.Kia" id="kia">
+		<constructor-arg ref="kk"></constructor-arg>
+	</bean>
+	
+	<bean class="car.HyundaeKey" id="hk"/>
+	<bean class="car.KiaKey" id="kk"/>
+	<bean class="car.Kia" id ="k"/>
+</beans>

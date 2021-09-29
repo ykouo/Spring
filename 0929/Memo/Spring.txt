@@ -1,0 +1,26 @@
+
+
+
+// 객체를 필요할 때 불러냄 
+<bean class="test.Test" id="test" lazy-init="true"/>
+
+
+// applicationContext.xml 이 뭐하는 애일까?
+IoC지원 스프링 컨테이너의 설정파일
+==> 객체관리
+
+
+
+Object obj = new Object();
+--------------------------
+Object obj2 = new Object(); <-- Object만큼의 공간을 잡아먹음
+Object obj2 = obj; <-- Object만큼의 공간을 절약할수있음
+
+사람(개발자)가 관리 --> 모르는 사이 객체가 쌓인다.
+컨테이너가 객체를 관리해주는 중 -->IoC(제어의역행)
+==> 싱글톤 패턴 
+
+
+DI 의존성주입 Dependency Injection
+⑴ Setter Injection 세터 주입 
+⑵ Constructor Injection 생성자 주입
