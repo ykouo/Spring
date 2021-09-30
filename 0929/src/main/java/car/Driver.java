@@ -1,5 +1,8 @@
 package car;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -14,10 +17,10 @@ public class Driver {
 		// AbstractApplicationContext  == 부모  GenericXmlApplicationContext==자식 관계
 		// GenericXmlApplicationContext == 콘솔창 
 		// factory ==> 객체를 여러개 생성할것이기 때문에factory
-//----------------------------------------------------------------------------------		
+//--------------------넵--------------------------------------------------------------		
 		// 2) 객체를 요청하면, 해당 객체를 제공한다.
 		//	  객체를 요청 == Look up 		<-- JNDI(DBCP) 할때 나옴 
-		System.out.println("=================================================");
+/*		System.out.println("=================================================");
 		Car k = (Car)factory.getBean("kia");
 		k.bootOn();
 		k.bootOff();
@@ -25,7 +28,20 @@ public class Driver {
 		Car h = (Car)factory.getBean("hy");
 		h.bootOn();
 		h.bootOff(); 
-
+*/
+/*		Car k = (Car)factory.getBean("kia");
+		k.bootOn();
+		k.bootOff();
+*/
+		Car kia = (Car)factory.getBean("kia");
+		List<String> list = kia.getList();
+		for(String v:list) {
+			System.out.println(v);
+		}
+		
+		Car kia1 = (Car)factory.getBean("kia1");
+		Map<String, String> map = kia1.getMap();
+		System.out.println(map);
 //----------------------------------------------------------------------------------	
 		// 3) 스프링 컨테이너 종료
 		factory.close();
