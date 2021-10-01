@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	
+	<!--  상대적으로 자주 바뀌지않는 애들은 bean으로 관리 -->
+	<context:component-scan base-package="day06"></context:component-scan>	
+	
+	<!--  상대적으로 자주 바뀌는 애들은 bean으로 관리 -->
+	<bean class="day06.Sword" id="sword"></bean>
+	<bean class="day06.Bow" id="bow"></bean>
+	<!--  -->
+
+<!-- 	<bean class="day06.Champ" id="champ">
+	Champ champ = new Champ();
+		<property name="name" value="티모"></property>
+		<property name="inven"> List 컬렉션
+			<list> 어떤 컬렉션인지 명시하고 
+				<value>내셔의 이빨</value> 값을 정의
+				<value>균열 생성기</value>
+				<value>리안드리</value>
+			</list>
+		</property>
+		<property name="weapon" ref="sword"></property>
+	</bean>
+-->
+</beans>
