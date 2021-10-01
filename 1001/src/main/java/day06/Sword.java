@@ -1,9 +1,5 @@
 package day06;
 
-import org.springframework.stereotype.Component;
-
-
-
 public class Sword implements Weapon{
 
 	@Override

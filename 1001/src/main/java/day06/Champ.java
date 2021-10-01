@@ -20,27 +20,9 @@ public class Champ implements ChampAction {
 	private List<String> inven;
 	//@Autowired //컨테이너는 자신이 만들어 두었던 객체의 타입을 확인!
 	@Resource(name="bow") // 타입도 보고 이름도 보는 어노테이션
+	//@Autowried // 트랜잭션,로깅, 보안등...
 	private Weapon weapon;
-
-	// Getter & Setter
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public List<String> getInven() {
-		return inven;
-	}
-	public void setInven(List<String> inven) {
-		this.inven = inven;
-	}
-	public Weapon getWeapon() {
-		return weapon;
-	}
-	public void setWeapon(Weapon weapon) {
-		this.weapon = weapon;
-	}
+	
 	@Override
 	public void attack() {
 		weapon.attack();
