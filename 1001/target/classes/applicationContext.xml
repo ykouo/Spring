@@ -11,8 +11,11 @@
 	<!--  상대적으로 자주 바뀌는 애들은 bean으로 관리 -->
 	<bean class="day06.Sword" id="sword"></bean>
 	<bean class="day06.Bow" id="bow"></bean>
-	<!--  -->
-
+	<!-- 우리가 코드로 직접관리하지 않는 로직 : 로깅, 트랜잭션, 보안 -->
+	
+	
+	
+	
 <!-- 	<bean class="day06.Champ" id="champ">
 	Champ champ = new Champ();
 		<property name="name" value="티모"></property>
