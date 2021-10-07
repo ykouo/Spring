@@ -1,0 +1,21 @@
+동작시점 (weaving)
+
+before			: 메서드 실행 전 수행 
+
+after-returning : 메서드가 성공적으로 완료된 후 수행 
+				  get()와 함께 사용됨
+				  after보다 먼저 실행됨
+				  
+after-throwing	: after보다 먼저 실행됨 
+				  메서드 수행중 예외 발생시 이후에 수행됨 
+				  == catch
+after			: 메서드 수행후 결과와 상관없이 기능 수행 
+				    핵심관심 후에 호출됨
+				   혹시라도 핵심관심중에 예외가 발생해도 호출됨
+				  == finally 
+				  after throwing보다 먼저 실행됨
+
+around			: 클라이언트가 사용하는 메서드를 가로챔
+				   메서드가 실행되기 전과 후 기능 수행 , proceed()메서드 호출 전후로 구분할 수 있음 
+				  => 메서드를 매개변수로 받기위해 존재하는 인자
+				  == ProceedingJoinPoint
