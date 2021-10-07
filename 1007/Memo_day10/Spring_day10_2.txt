@@ -1,27 +1,29 @@
-¹ÙÀÎµå º¯¼ö 
+ë°”ì¸ë“œ ë³€ìˆ˜ 
 
- - ¿¬°áÇØ³õÀº Æ÷ÀÎÆ®ÄÆÀ» pjp°´Ã¼·Î ¸¸µé¾î¼­ ÀÎÀÚ·Î »ç¿ë ==> springContainer°¡ ¼öÇàÇØÁÜ 
+ - ì—°ê²°í•´ë†“ì€ í¬ì¸íŠ¸ì»·ì„ pjpê°ì²´ë¡œ ë§Œë“¤ì–´ì„œ ì¸ìžë¡œ ì‚¬ìš© â‡›  springContainerê°€ ìˆ˜í–‰í•´ì¤Œ 
 
 printLog(pjp); 
-==> printLog¸¦ È£ÃâÇÒ¶§ pjp°¡ ÇÊ¿ä 
+â‡›  printLogë¥¼ í˜¸ì¶œí• ë•Œ pjpê°€ í•„ìš” 
 
 public class AroundAdvice {
 	public Object printLog(ProceedingJoinPoint pjp) throws Throwable {
-		System.out.println("pjpÀÎÀÚ¸¦ °®´Â ¸Þ¼­µå¿¡¼­ Ãâ·ÂÇÏ´Â ¹®±¸ -1");
-		Object obj=pjp.proceed(); ==> nullPointerExceptionÀÌ ¹ß»ýÇÏÁö ¾Ê´Â´Ù . 
+		System.out.println("pjpì¸ìžë¥¼ ê°–ëŠ” ë©”ì„œë“œì—ì„œ ì¶œë ¥í•˜ëŠ” ë¬¸êµ¬ -1");
+		Object obj=pjp.proceed(); â‡›  nullPointerExceptionì´ ë°œìƒí•˜ì§€ ì•ŠëŠ”ë‹¤ . 
 									  why? 
-									  SpringContainer°¡ ¼öÇàÇØ¼­ ¿¬°áÇØ³õÀº Æ÷ÀÎÆ®ÄÆ(ÇÙ½É·ÎÁ÷)À» 
-									  pjp°´Ã¼·Î ¸¸µé¾î¼­ ÀÎÀÚ·Î »ç¿ëÇÒ ¼ö ÀÖ°Ú²û ÇØ ÁÜ
-		System.out.println("pjpÀÎÀÚ¸¦ °®´Â ¸Þ¼­µå¿¡¼­ Ãâ·ÂÇÏ´Â ¹®±¸ -2");
+									  SpringContainerê°€ ìˆ˜í–‰í•´ì„œ ì—°ê²°í•´ë†“ì€ í¬ì¸íŠ¸ì»·(í•µì‹¬ë¡œì§)ì„ 
+									  pjpê°ì²´ë¡œ ë§Œë“¤ì–´ì„œ ì¸ìžë¡œ ì‚¬ìš©í•  ìˆ˜ ìžˆê² ë” í•´ ì¤Œ
+		System.out.println("pjpì¸ìžë¥¼ ê°–ëŠ” ë©”ì„œë“œì—ì„œ ì¶œë ¥í•˜ëŠ” ë¬¸êµ¬ -2");
 		return obj;
 	}
 }
 
-½ºÇÁ¸µ ÄÁÅ×ÀÌ³Ê°¡ IoC,AOP ¸¦ Áö¿øÇÏ´Â ´ö¿¡ ¸Þ¼­µå ³¢¸®ÀÇ °áÇÕÀÌ ¿ëÀÌ ÇØÁ³´Ù.
-È¾´Ü°ü½É + ÇÙ½É°ü½ÉÀ» °áÇÕÇÒ¶§ ¸¹ÀÌ »ç¿ë
-==> ·Î±ëÃ³¸® (³»°¡ ¾î¶² ÇÙ½É°ü½É¿¡ °áÇÕµÇ¾îÀÖ´ÂÁö »ý°¢ÇÒ ÇÊ¿ä°¡ º°·Î ¾øÀ½)
-==> Æ®·£Àè¼Ç , º¸¾È, ÀÎÁõ (ÇÏÁö¸¸ Æ®·£Àè¼Ç,º¸¾È,ÀÎÁõ ÀÇ °æ¿ì ÇÙ½É°ü½ÉÀÌ ¹«¾ùÀÎÁö ¾Ë ÇÊ¿ä°¡ ÀÖÀ½ ) 
-Å¬¶óÀÌ¾ðÆ®°¡ »ç¿ëÇÏ´Â ºñÁî´Ï½º¸Þ¼­µå(Áï, ÇÙ½É°ü½É)ÀÇ Á¤º¸¸¦ ¹Þ¾Æ¿À´Â JoinPoint ÀÎÅÍÆäÀÌ½º 
+ìŠ¤í”„ë§ ì»¨í…Œì´ë„ˆê°€ IoC,AOP ë¥¼ ì§€ì›í•˜ëŠ” ë•ì— ë©”ì„œë“œ ë¼ë¦¬ì˜ ê²°í•©ì´ ìš©ì´ í•´ì¡Œë‹¤.
+íš¡ë‹¨ê´€ì‹¬ + í•µì‹¬ê´€ì‹¬ì„ ê²°í•©í• ë•Œ ë§Žì´ ì‚¬ìš©
+â†’ ë¡œê¹…ì²˜ë¦¬ (ë‚´ê°€ ì–´ë–¤ í•µì‹¬ê´€ì‹¬ì— ê²°í•©ë˜ì–´ìžˆëŠ”ì§€ ìƒê°í•  í•„ìš”ê°€ ë³„ë¡œ ì—†ìŒ)
+â†’ íŠ¸ëžœìž­ì…˜ , ë³´ì•ˆ, ì¸ì¦ (í•˜ì§€ë§Œ íŠ¸ëžœìž­ì…˜,ë³´ì•ˆ,ì¸ì¦ ì˜ ê²½ìš° í•µì‹¬ê´€ì‹¬ì´ ë¬´ì—‡ì¸ì§€ ì•Œ í•„ìš”ê°€ ìžˆìŒ ) 
+í´ë¼ì´ì–¸íŠ¸ê°€ ì‚¬ìš©í•˜ëŠ” ë¹„ì¦ˆë‹ˆìŠ¤ë©”ì„œë“œ(ì¦‰, í•µì‹¬ê´€ì‹¬)ì˜ ì •ë³´ë¥¼ ë°›ì•„ì˜¤ëŠ” JoinPoint ì¸í„°íŽ˜ì´ìŠ¤ 
 									==> ProceedingJoinPoint 
-==> ÀÌ ¸ðµç ÀÏÀÌ °¡´ÉÇÑ ÀÌÀ¯´Â springContainer°¡ °´Ã¼¸¦ »ý¼º°ü¸®ÇØÁÖ±â ¶§¹® 
+â‡› ì´ ëª¨ë“  ì¼ì´ ê°€ëŠ¥í•œ ì´ìœ ëŠ” springContainerê°€ ê°ì²´ë¥¼ ìƒì„±ê´€ë¦¬í•´ì£¼ê¸° ë•Œë¬¸ 
+
+
 		 

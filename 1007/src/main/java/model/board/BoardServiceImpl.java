@@ -20,11 +20,11 @@ public class BoardServiceImpl implements BoardService {
 	}*/
 	@Override
 	public void insertBoard(BoardVO vo) {
-		if(vo.getId()==0) {
-			throw new IllegalArgumentException();
+	/*	if(vo.getId()==0) {
+			throw new IllegalArgumentException("id PK : 0 불가능!");
 			// 런타임예외(실행시에 발생, 체크되는 예외)
 		}
-		
+	*/	
 		boardDAO.insertBoard(vo);		
 	}
 	@Override

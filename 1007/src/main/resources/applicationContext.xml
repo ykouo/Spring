@@ -19,20 +19,21 @@
 	<aop:config>
 		<aop:pointcut expression="execution(* model.board.*Impl.get*(..))" id="aPointcut"/>
 		<aop:pointcut expression="execution(* model.board.*Impl.*(..))" id="bPointcut"/>
+		<aop:pointcut expression="execution(* model.mem.*Impl.get*(..))" id="cPointcut"/>
 	
 		<!-- aspect 설정 -->
-	<!-- 	<aop:aspect ref="aAdvice">
+	 	<aop:aspect ref="aAdvice">
 			<aop:after method="printLog" pointcut-ref="bPointcut"/>
 		</aop:aspect>
 		<aop:aspect ref="arAdvice">
-			<aop:after-returning method="printLog" pointcut-ref="aPointcut"/>
+			<aop:after-returning method="printLog" pointcut-ref="cPointcut" returning="obj"/>
 		</aop:aspect>
 		<aop:aspect ref="atAdvice">
-			<aop:after-throwing method="printLog" pointcut-ref="bPointcut"/>
-		</aop:aspect> -->
-		<aop:aspect ref="aroundAdvice">
+			<aop:after-throwing method="printLog" pointcut-ref="bPointcut" throwing="e"/>
+		</aop:aspect> 
+ 		<aop:aspect ref="aroundAdvice">
 			<aop:around method="printLog" pointcut-ref="bPointcut"/>
-		</aop:aspect>
+		</aop:aspect> 
 	</aop:config>
 
 
