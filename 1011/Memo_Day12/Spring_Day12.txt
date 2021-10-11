@@ -1,0 +1,101 @@
+스프링에서의 JDBC
+
+SQL구문만 조금씩 달라질뿐, 전체적인 코드구조(자바코드)는 유사함
+DAO가 추가될때마다
+비슷한 코드작성을 반복해야만한다.
+
+JDBCTemplete클래스를 스프링에서 지원해줌(JDBC기반)
+
+============================================================
+JDBCTemplete
+	: 템플릿메서드 패턴이 적용된 클래스
+	  → 반복되는 로직을 캡슐화시켜 재사용하는 패턴 
+	  JDBC템플릿이 많은 이유 : 규정된 (즉, 정형화)된 로직이 많이 사용되는 분야
+
+1. 설정을 어떻게하는지 ==> pom.xml + applicationContext.xml에서 하는 거
+
+pom.xml 에 
+=============================================================
+	<!-- DBCP 연결을 위한 드라이버 설정 -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-jdbc</artifactId>
+		<version>${org.springframework-version}</version>
+	</dependency>
+	<dependency>
+		<groupId>commons-dbcp</groupId>
+		<artifactId>commons-dbcp</artifactId>
+		<version>1.4</version>
+	</dependency>
+=============================================================	
+코드 추가 설정 
+
+JDBCTemplate을 왜 썻는지? : 자바 DAO가 생성될때마다 비슷한 로직이 반복되는 문제점이 있다. 
+이러한 문제점을 스프링에서는 템플릿으로 제공 대신 처리해준다.
+
+설정 : applicationContext.xml에 JDBC 데이터소스를 등록한다. 
+	 ==> 이걸 등록하기 위해 pom.xml에서 dependency추가가 필요하다.
+
+﻿===정리=========================================================
+JDBC의 문제점 : JDBC관련 코드를 메서드를 구현할때마다 반복해서 작성해야하는 문제점이 있음 (DAO생성시 비슷한 로직을 반복작성)
+
+JDBC Template란 이러한 JDBC의 문제점을 알고있어 Spring에서는 JDBC Template란 클래스를 제공하여 데이터베이스 연동에 필요한 코드를 대신 처리해주어 해결해준다.
+JDBC Template 는 GoF디자인 패턴중 템플릿메서드패턴이 적용된 클래스
+
+템플릿메서드패턴은 복잡하고 반복되는 알고리즘을 <캡슐화> 하여 재사용하는 패턴
+
+즉, JDBC Template클래스가 제공하는 템플릿메서드를 호출하여 데이터베이스 연동에 필요한 코드를 처리
+=============================================================	
+데이터소스 
+"Datasource를 스프링컨테이너가 만들수 있도록 해야합니다." 
+﻿
+JDBC Template클래스가 JDBC API를 이용하여 데이터베이스 연동을 처리하기 위해 DataSource를 <bean>에 등록하여 SpringContainer가 생성할 수 있도록 해야한다.
+BasicDataSource객체가 삭제되기 전에 연결을 해제하고자 destroy-method속성을 설정하고
+연결에 필요한 설정은 property를 Setter인젝션으로 설정하였다.
+
+﻿
+==> applicationContext.xml에서 만든다. 
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"></bean>
+																		ㄴjdbc,dbcp의 conn close()와 같은 맥락이므로 꼭 닫아주기
+
+2."어떻게" 이용하나?
+	1) update()
+		→ insert,update,delete sql구문을 처리할떄 호출
+		- ?안에 들어갈 값을 순서대로 나열해서 작성
+		- ?안에 들어갈 값을 배열로 만들어서 전달
+			→ Object배열										
+			ex) 
+				1번방식)	?안에 들어갈 값을 순서대로 나열해서 작성		
+				public void updateBoard(BoardVO vo){
+					int cnt = jdbcTemplate.update(sql구문,?,?,?,?);
+					
+				}	
+				2번방식)  ?안에 들어갈 값을 배열로 만들어서 전달
+				Object[] args={?,?,?,?}
+				public void updateBoard(BoardVO vo){
+					int cnt = jdbcTemplate.update(sql구문,args);
+				}
+				// cnt == sql구문이 수행된 row수 
+		2) queryForInt()
+			→ select sql구문을 처리할 때 호출
+			  select구문중에서도 정수값이 검색된 경우에 사용
+			  ex) sql구문 == select count(*) from board
+		3) queryForObject()
+			→ select sql구문의 실행결과가 없거나, 두개이상이면 예외발생해버림
+				selectOne()와 유사 
+				DBMS sql구문으로 검색된결과 != 자바객체 (VO)
+								
+								-----[매핑]---->>
+								매핑을 위한 RowMapper 설정 필요 ★
+								테이블마다 필요! <<<
+								1) 누구랑 매핑할지? 어떤VO랑 매핑할지에대한 정보
+								2) 컬럼과 멤버변수를 매핑하는데 어떻게 매핑할지에대한 정보
+								ex) public BoardVO getData(BoardVO vo){
+										return jdbcTemplate.queryForObject(sql구문,args,new BoardRowMapper());
+									}
+		4) query()
+			→ 실행결과가 List일때 사용
+			     검색결과가 여러개일때 사용			
+			 ex) public List<BoardVO> getDataList(BoardVO vo){
+					return jdbcTemplate.query(sql구문,new BoardRowMapper());
+				 }    			
