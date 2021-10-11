@@ -1,4 +1,4 @@
-package model.board;
+/*package model.board;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -98,7 +98,7 @@ public class BoardDAO {
 		return datas;
 	}
 	public BoardVO getBoard(BoardVO vo) {
-		//System.out.println("dao·Î get");
+		System.out.println("dao·Î get");
 		BoardVO data=null;
 		try {
 			conn=JDBC.getConnection();
@@ -122,3 +122,4 @@ public class BoardDAO {
 		return data;
 	}
 }
+*/

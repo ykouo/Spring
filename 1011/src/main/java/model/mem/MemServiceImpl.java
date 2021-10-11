@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service("memService")
 public class MemServiceImpl implements MemService{
 	@Autowired
-	private MemDAO memDAO;
+	private SpringMemDAO memDAO;
 	
 	@Override
 	public void insertMem(MemVO vo) {
