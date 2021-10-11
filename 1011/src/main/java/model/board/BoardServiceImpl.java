@@ -1,4 +1,4 @@
-/*package model.board;
+package model.board;
 
 import java.util.List;
 
@@ -41,4 +41,3 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 }
-*/

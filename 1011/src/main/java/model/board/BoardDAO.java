@@ -1,4 +1,4 @@
-/*package model.board;
+package model.board;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -122,4 +122,3 @@ public class BoardDAO {
 		return data;
 	}
 }
-*/

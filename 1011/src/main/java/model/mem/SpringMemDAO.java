@@ -25,7 +25,7 @@ class MemRowMapper implements RowMapper<MemVO>{
 	
 }
 @Repository
-public class SpringMemDAO extends JdbcDaoSupport{
+public class SpringMemDAO /*extends JdbcDaoSupport*/{
 	
 	private final String insertSQL="INSERT INTO MEM (ID,PASSWORD,NAME,ROLE) VALUES (?,?,?,?)";
 	private final String updateSQL="UPDATE MEM SET NAME=?, PASSWORD=? where ID=?";

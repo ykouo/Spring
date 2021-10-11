@@ -1,4 +1,4 @@
-/*package model.board;
+package model.board;
 
 import java.sql.Date;
 
@@ -47,4 +47,4 @@ public class BoardVO {
 				+ wdate + "]";
 	}
 	
-}*/
+}

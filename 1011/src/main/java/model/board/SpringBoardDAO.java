@@ -1,4 +1,4 @@
-/*package model.board;
+package model.board;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -64,4 +64,3 @@ public class SpringBoardDAO {
 	}
 	
 }
-*/

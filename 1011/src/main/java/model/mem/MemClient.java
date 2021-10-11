@@ -8,7 +8,7 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 public class MemClient {
 	public static void main(String[] args) {
 		AbstractApplicationContext factory = new GenericXmlApplicationContext("applicationContext.xml");
-		MemService ms = (MemService) factory.getBean("memService");
+		MemService ms = (MemService)factory.getBean("memService");
 
 		MemVO vo = new MemVO();
 		/*vo.setId("timo1");
