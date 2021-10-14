@@ -1,0 +1,61 @@
+[ 트랜잭션 관리자 설정 ]
+	▸ 스프링에서는 트랜잭션을 선언적으로 처리
+		== 트랜잭션 처리도 컨테이너가 자동으로 처리 할 수 있다.
+
+
+[ AOP를 기반으로 사용 ]
+	▸ @(어노테이션) 사용이 불가
+	▸ XML 기반으로만 설정 가능
+		→ 클래스를 직접작성하지 않음
+		→ 클래스명 || 메서드명 확인이 불가능하기 때문
+		→  <aop:aspect> 대신 <aop:advisor>을 사용
+		
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+[Transaction 설정 과정 ]
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+< applicationContext.xml >
+	① tx네임스페이스 추가
+	② 트랜잭션 관리자 등록 : 어떤 db기술을 연동했는지에 따라 달라짐
+					  JDBC기반으로 실습 → 추후 변경가능성 有 // mybatis 배우면 mybatis로 변경할 예정 
+					    현재는 JPA로 사용할 예정
+					    모든 트랜잭션 관리자는 PlatformTransactionManager 인터페이스 구현 
+					  											ㄴ"메서드 강제성"
+					  											- getTransaction()/commit()/rollback()  
+
+	⇒ <bean> 등록시 DataSourceTransactionManager사용예정인데 , jdbc(DataSource)사용중임에 유의!
+		⇛ 사전에 dataSource 객체 확보가 필요 ( 아래 상세하게 적어놓음)
+
+	<!-- 트랜잭션  -->
+ 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+      <property name="dataSource" ref="dataSource" /> ← 참조할 dataSource 레퍼런스가 필요하기 때문에
+   	</bean>
+   	↶dataSource 도 bean으로 설정해야한다.
+   	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="kim"></property>
+		<property name="password" value="1234"></property>
+	</bean>
+	
+   	③ txManager를 등록했을뿐, 메서드(commit, rollback)가 자동처리되는것은 아님!
+   		→ aop |  핵심관심vs[횡단관심]			 
+   	    → commit 과 rollback을 advice화 시키는것이 핵심!
+   	
+   	④ 비즈니스 메서드(핵심관심<CRUD>) 실행시 예외발생하면 rollback 
+   	    문제없으면 commit  하도록 어드바이스를 등록!
+   	   <tx:advice id="txAdvice" transaction-manager="txManager">
+   			<tx:attributes>
+   				<tx:method name="get*" read-only="true"/> ← read-only속성 : 읽기전용으로 처리 == 트랜잭션에서 배제하겠다.
+   				<tx:method name="*"/> ← get메서드를 제외한 모든 메서드를 참조 
+   			</tx:attributes>   
+   		</tx>
+	
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+ [ 트랜잭션 적용 처리순서 ]
+ 	① 클라이언트는 bs를 통해 insertBoard(),insertMember()를 사용(호출)
+ 	② bs는 dao(JdbcTemplate)를 통해 insert비즈니스 로직을 처리(수행)
+ 	③ 문제가 발생하면, ★txAdvice★가 동작할수 있도록 설정
+ 	④ txManager(트랜잭션관리자 객체)가 rollback()수행 
+  	   
+   	
+   		           											 			  
