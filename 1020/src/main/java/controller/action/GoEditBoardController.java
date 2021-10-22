@@ -2,17 +2,27 @@ package controller.action;
 
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import model.board.BoardDAO;
 import model.board.BoardVO;
 
-public class GoEditBoardController implements Controller{
+@Controller
+public class GoEditBoardController{
+	@RequestMapping("/goeditBoard.do")
+	public String goeditBoard(HttpServletRequest request)  {
+		BoardDAO bdao = new BoardDAO();
+		BoardVO bvo = new BoardVO();
+		bvo.setBid(Integer.parseInt(request.getParameter("bid")));
+		
+		BoardVO data = bdao.getBoard(bvo);
+		request.setAttribute("data", data);
+		return "editBoard";
 
-	@Override
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	}
+/*	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		BoardDAO bdao = new BoardDAO();
 		BoardVO bvo = new BoardVO();
 		bvo.setBid(Integer.parseInt(request.getParameter("bid")));
@@ -25,6 +35,6 @@ public class GoEditBoardController implements Controller{
 		mav.setViewName("editBoard");
 		
 		return mav;
-	}
+	}*/
 
 }

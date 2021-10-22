@@ -16,7 +16,7 @@ public class InsertBoardController{
 	// 2. 상속xxx, 추상메서드의 강제성xxx => 함수의 input,output,함수명변경가능!
 	// @RequestMapping어노테이션의 경우 어떤 메서드 수행을 할지가 목적이기 때문에 메서드 위에 달기!
 	@RequestMapping("/newpost.do")
-	public String insertBoard(HttpServletRequest request) throws IOException {
+	public String insertBoard(HttpServletRequest request , BoardVO vo, BoardD){
 		BoardDAO bdao = new BoardDAO();
 		BoardVO bvo = new BoardVO();
 		

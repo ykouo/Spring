@@ -1,15 +1,20 @@
 package controller.action;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-
-public class LogoutController implements Controller {
-
+@Controller
+public class LogoutController{
+	@RequestMapping("/logout.do")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return "index.jsp";
+	
+	}
 
 /*	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
@@ -18,6 +23,7 @@ public class LogoutController implements Controller {
 		
 		mav.setViewName("index");
 		return mav;
-	}*/
+	}
+*/
 	
 }
