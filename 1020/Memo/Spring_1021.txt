@@ -1,0 +1,188 @@
+스프링에서 제공하는 DS로 DS를 교체!
+
+스프링에서 제공하는 DS를 사용 
+👉🏻 login.do -> DS객체 생성 -> init() 자동호출  👈🏻 여기서 HandlerMapping...등이 만들어진다.
+	-> init이 완료가되면 XmlWebApplicationContext 가 생성됨
+	
+
+fileNotFoundException 발생 
+-> 이유 : 서블릿 컨테이너를 변경하면 해당 컨테이너의 xml파일을 먼저 보게 되는데 Spring컨테이너의 DispatcherServlet을 사용하기로 
+		 web.xml에서 지정하였다. 
+
+
+✔ 정확한 위치와 이름 형식을 지정해야한다. 
+[/WED-INF/등록한 서블릿 이름-servlet.xml]
+
+
+==> controller.DispatcherServlet이 필요가 없어짐 
+
+
+Controller 변경
+Controller : 우리가 만든거 
+ActionForward, execute(req,res)로 구성되어있던 컨트롤러
+--> String, execute(req,res) -> 경로 / 로 변경되었었다.
+--> Controller : Spring에서 제공
+ 	ModelAndView handleRequest()
+	→ mav객체 리턴 : 정보와 경로를 저장해 리턴할수 있다. 
+	
+DS -> C -> mav객체를 리턴 -> Model에 저장된 정보 추출 -> View에 저장된 곳으로 전송
+-							-> ★  우리는 전송헤더라는 개념을 사용하는데  헤더에 데이터를 넣어서 보낼때
+								 HttpServletRequest Model 객체에 정보를 저장해서 보냄
+								 ==> Session이나 Application에 담아서 보내면 안되냐는 질문이 多: 서버 부담이 됨
+
+web.xml 설정을 바꿔줘야한다.
+====================================================================================
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <servlet>
+    <description></description>
+    <display-name>DispatcherServlet</display-name>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <servlet-class>controller.common.DispatcherServlet</servlet-class> 👈🏻 org.springframework.web.servlet.DispatcherServlet
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  <context-param>
+    <param-name>encoding</param-name>
+    <param-value>UTF-8</param-value>
+  </context-param>
+  <filter>
+    <display-name>EncFilter</display-name>
+    <filter-name>EncFilter</filter-name>
+    <filter-class>controller.common.EncFilter</filter-class> 👈🏻  org.springframework.web.filter.CharacterEncodingFilter
+ 	******************* 추가 
+ 	<init-param>
+       <param-name>encoding</param-name>
+       <param-value>UTF-8</param-value>
+    </init-param>
+ 	*******************
+  </filter>
+  <filter-mapping>
+    <filter-name>EncFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>EncFilter</filter-name>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+</web-app>
+====================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package controller.common;
+
+import java.io.IOException;
+
+
+import javax.servlet.ServletException;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+// DispatcherServlet == FrontController
+
+/**
+ * Servlet implementation class DispatcherServlet
+ */
+public class DispatcherServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    // 추가 
+	private HandlerMapping handlerMapping;
+	private ViewResolver viewResolver;
+	
+	// 로그인의 경우 LoginController 객체는 하나만 있어도 괜찮음
+	// 초기화 메서드를 생성
+	public void init() {
+		handlerMapping = new HandlerMapping();
+		viewResolver = new ViewResolver();
+		viewResolver.setPrefix("./"); // 현재디렉토리
+		viewResolver.setSuffix(".jsp"); // 파일타입
+	}
+	
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public DispatcherServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doAction(request,response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doAction(request,response);
+	}
+	
+	private void doAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String uri = request.getRequestURI();
+		String cp = request.getContextPath();
+		String action = uri.substring(cp.length());	
+	
+		// HandlerMapping에게 action값을 전달, Controller객체를 반환받는다. 
+		// ==> Lookup(검색, 탐색)한다 == 객체를 찾아다니는 행위 
+		
+		Controller controller = handlerMapping.getController(action);
+		
+		// 클라이언트의  요청을 실질적으로 수행하는 controller 객체!!!
+		// 그 결과로 "경로"를 리턴!!
+		String view = controller.execute(request, response); // 동적바인딩이 일어났다! == 다형성 적용 됐다!
+		
+		if(!view.contains(".do")){
+			view = viewResolver.getView(view);
+		}
+		
+		response.sendRedirect(view);
+			
+	}
+
+}
