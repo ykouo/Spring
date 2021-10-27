@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class BoardServiceImpl implements BoardService{
 
 	@Autowired
-	private SpringBoardDAO boardDAO;
+	private SpringBoardDAO boardDAO; // alt+shift+R -> 이름 한번에 변경 가능!
 	
 	@Override
 	public void insertBoard(BoardVO vo) {
@@ -37,8 +37,19 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<BoardVO> searchBoard(BoardVO vo) {
-		return boardDAO.searchBoard(vo);
+	public List<BoardVO> searchBoardList(BoardVO vo) {
+		return boardDAO.getBoardList(vo);
+	}
+
+	@Override
+	public List<BoardVO> getBoardList(int startRow, int endRow) {
+		return boardDAO.getBoardList(startRow, endRow);
+	}
+
+	@Override
+	public int getBoardCnt() {
+		// TODO Auto-generated method stub
+		return 10;
 	}
 
 }

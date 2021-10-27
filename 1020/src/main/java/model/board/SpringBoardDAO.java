@@ -26,7 +26,6 @@ class BoardRowMapper implements RowMapper<BoardVO>{
 
 @Repository
 public class SpringBoardDAO {
-
 	
 	// SQL문
 	private final String insertBoardSQL = "INSERT INTO BOARD (BID,MID,TITLE,CONTENT) VALUES ((SELECT NVL(MAX(BID),0)+1 FROM BOARD),?,?,?)"; 
@@ -35,8 +34,9 @@ public class SpringBoardDAO {
 	private final String selectAllBoardSQL = "SELECT * FROM BOARD ORDER BY BID DESC";
 	private final String selectOneBoardSQL = "SELECT * FROM BOARD WHERE BID=?";
 	private final String searchBoardSQL = "SELECT * FROM BOARD WHERE TITLE LIKE ? ORDER BY BID DESC";
-
-	
+	private final String getBoardCntSQL = "SELECT COUNT(*) FROM BOARD";
+	private final String getBoardListSQL_TITLE="select * from board where title like '%'||?||'%' order by id desc";
+	private final String getBoardListSQL_WRITER="select * from board where writer like '%'||?||'%' order by id desc";
 	// jdbcTemplate 추가
 	
 	// new 연산자사용을 컨테이너가 대신!
@@ -69,10 +69,30 @@ public class SpringBoardDAO {
 		return jdbcTemplate.query(selectAllBoardSQL,new BoardRowMapper());
 	}
 	// R - select all 2 검색기능
-	public List<BoardVO> searchBoard(BoardVO vo){
+/*	public List<BoardVO> searchBoard(BoardVO vo){
 		Object[] args = {"%"+vo.getTitle()+"%"};
 		return jdbcTemplate.query(searchBoardSQL,args,new BoardRowMapper());
+	}*/
+	// 게시판 전체글수를 카운팅하는 메서드 
+/*	public int getBoardCnt() {
+		return jdbcTemplate.query(getBoardCntSQL);
+	}*/
+	// pagenation을 위한 getList
+	public List<BoardVO> getBoardList(int startRow, int endRow) {
+		System.out.println("Spring dao로 getList");
+		String getBoardPagingSQL = "SELECT * FROM (SELECT ROWNUM AS RNUM, A.BID,A.MID,A.TITLE,A.CONTENT,A.WDATE FROM (SELECT * FROM BOARD ORDER BY BID DESC) A) WHERE RNUM BETWEEN "+startRow+" AND "+endRow;
+		return jdbcTemplate.query(getBoardPagingSQL,new BoardRowMapper());
 	}
-	
+	// 검색기능
+	public List<BoardVO> searchBoardList(BoardVO vo) {
+		System.out.println("jdbcTemplate으로searchBoardList");
+		Object[] args= { vo.getKeyword() };
+		if(vo.getCondition().equals("title")) {
+			return jdbcTemplate.query(getBoardListSQL_TITLE,args,new BoardRowMapper());
+		}
+		else {
+			return jdbcTemplate.query(getBoardListSQL_WRITER,args,new BoardRowMapper());
+		}
+	}
 
 }

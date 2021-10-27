@@ -104,12 +104,12 @@ public class MemDAO {
 		}
 		return datas;
 	}
-	public boolean getMem(MemVO vo) {
+	public MemVO getMem(MemVO vo) {
 		System.out.println("dao로 get");
 		// 로그인에 성공한다면, MemVO객체가 리턴(반환)
 		// 실패한다면 리턴이 null 
 		// selectOneMemSQL = "SELECT * FROM MEM WHERE MID=? AND MPW=?";
-		boolean res=false;
+		//boolean res=false;
 		MemVO data=null;
 		try {
 			conn=JDBC.getConnection();
@@ -125,7 +125,7 @@ public class MemDAO {
 				data.setCall(rs.getString("call"));
 				data.setRole(rs.getString("role"));
 				data.setMdate(rs.getDate("mdate"));
-			res=true;
+			//res=true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -133,7 +133,7 @@ public class MemDAO {
 		finally {
 			JDBC.close(conn, pstmt, rs);
 		}
-		return res;
+		return data;
 	}
 	public boolean checkMem(MemVO vo) {
 		boolean res =false;

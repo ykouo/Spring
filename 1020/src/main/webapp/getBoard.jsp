@@ -6,11 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="css/total.css" />
+
 </head>
 <body>
 
-<form action="goeditBoard.do" method="post">
+<form action="editBoard.do" method="post" > 
 	<input type="hidden" name="bid" value="${data.bid}">
 	<input type="hidden" name="mid" value="${data.mid}">
 	<input type="hidden" name="wdate" value="${data.wdate}">
@@ -39,7 +39,7 @@
 		</tr>	
 		<c:if test="${data.mid eq mem}">
 		<tr>
-			<td colspan="2"><input type="submit" value="수정하기"></td>
+			<td colspan="2"><input type="submit" value="수정하기"></td> 
 		</tr>
 		</c:if>		
 	</table>

@@ -14,6 +14,22 @@
 <h3><a href="logout.do">로그아웃</a></h3>
 <h1>글목록</h1>
 <hr color="salmon">
+	<form action="main.do" method="post">
+	<table> <!-- condition keyword -->
+		<tr>
+			<th>
+				<select name ="condition">
+					<c:forEach var="op" items="${sm}">
+						<option value="${op.value}">${op.key}</option>			
+					</c:forEach>
+				</select>
+			</th>
+			<td><input type="text" name="keyword"></td>
+			<td><input type="submit" value="검색"></td>
+		</tr>
+	</table>
+	</form>
+
 <table>
 	<tr>
 		<td>글번호</td>
@@ -32,7 +48,7 @@
 	</c:forEach>
 </table>
 	<!-- pagination -->
-		<div id="paging">
+		<div id="paging" >
 			<ul class="pagenation">
 					<c:if test="${paging.pageNum==paging.firstPageNum}">
 						<li>
