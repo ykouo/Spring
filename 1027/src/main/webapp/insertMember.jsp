@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,26 +13,26 @@
 <form action="joinMember.do">
 	<table border="1">
 		<tr>
-			<td>아이디</td>
+			<td><spring:message code="message.join.id"/></td>
 			<td><input type="text" name="mid" required="required"></td>
 		</tr>
 		<tr>
-			<td>비밀번호</td>
+			<td><spring:message code="message.join.pw"/></td>
 			<td><input type="password" name="mpw" required="required"></td>
 		</tr>
 		<tr>
-			<td>닉네임</td>
+			<td><spring:message code="message.join.nickname"/></td>
 			<td><input type="text" name="mname" required="required"></td>
 		</tr>
 		<tr>
-			<td>전화번호</td>
+			<td><spring:message code="messgae.join.call"/></td>
 			<td><input type="tel" name="call" required="required"></td>
 		</tr>
 		<tr>
-			<td colspan="2"><input type="submit" value="회원가입"></td>
+			<td colspan="2"><input type="submit" value="<spring:message code="message.join.joinIn"/>"></td>
 		</tr>
 	</table>
-	<a href="index.jsp">로그인페이지로</a>
+	<a href="index.jsp"><spring:message code="messgae.join.gomain"/></a>
 </form>
 </body>
 </html>

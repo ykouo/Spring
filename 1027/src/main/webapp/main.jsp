@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="model.board.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +12,8 @@
 
 </head>
 <body>
-<h3><a href="logout.do">로그아웃</a></h3>
-<h1>글목록</h1>
+<h3><a href="logout.do"><spring:message code="message.main.logout"/></a></h3>
+<h1><spring:message code="message.main.boardlist"/></h1>
 <hr color="salmon">
 	<form action="main.do" method="post">
 	<table> <!-- condition keyword -->
@@ -25,17 +26,17 @@
 				</select>
 			</th>
 			<td><input type="text" name="keyword"></td>
-			<td><input type="submit" value="검색"></td>
+			<td><input type="submit" value="<spring:message code="message.main.search"/>"></td>
 		</tr>
 	</table>
 	</form>
 
 <table>
 	<tr>
-		<td>글번호</td>
-		<td>제목</td>
-		<td>작성자</td>
-		<td>작성일</td>
+		<td><spring:message code="message.main.bnum"/></td>
+		<td><spring:message code="message.main.title"/></td>
+		<td><spring:message code="message.main.writer"/></td>
+		<td><spring:message code="message.main.date"/></td>
 	</tr>
 	
 	<c:forEach var="v" items="${blist}">
@@ -52,12 +53,12 @@
 			<ul class="pagenation">
 					<c:if test="${paging.pageNum==paging.firstPageNum}">
 						<li>
-						<a href="main.do?page=${paging.prevPageNum}">이전</a>
+						<a href="main.do?page=${paging.prevPageNum}"><spring:message code="messgae.main.prev"/></a>
 						</li>
 					</c:if>
 					<c:if test="${paging.pageNum!=paging.firstPageNum}">
 						<li><a
-							href="main.do?page=${paging.prevPageNum}">이전</a></li>
+							href="main.do?page=${paging.prevPageNum}"><spring:message code="messgae.main.prev"/></a></li>
 					</c:if>
 
 					<c:forEach var="i" begin="${paging.startPageNum}"
@@ -76,19 +77,19 @@
 
 					<c:if test="${paging.pageNum==paging.finalPageNum}">
 						<li>
-							<a href="main.do?page=${paging.nextPageNum}"class="button disabled">다음</a>
+							<a href="main.do?page=${paging.nextPageNum}"class="button disabled"><spring:message code="messgae.main.next"/></a>
 						</li>
 					</c:if>
 					<c:if test="${paging.pageNum!=paging.finalPageNum}">
 						<li>
-							<a href="main.do?page=${paging.nextPageNum}"class="button">next</a>
+							<a href="main.do?page=${paging.nextPageNum}"class="button"><spring:message code="messgae.main.next"/></a>
 						</li>
 					</c:if>
 			</ul>
 		</div>
 
 <hr color="salmon">
-<a href="insertBoard.jsp">글작성</a>
+<a href="insertBoard.jsp"><spring:message code="message.main.addboard"/></a>
 
 </body>
 </html>
