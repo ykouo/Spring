@@ -42,7 +42,22 @@
 		</property>
 	</bean>
 
-
-
+	<!-- springframework에서 제공,mybatis.spring에서 제공 -->
+	<!-- 27의 객체(==FB)로, 31의 객체(==SqlSession)를 생성 -->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:sql-map-config.xml" />
+	</bean>
+	<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sessionFactory" />
+	</bean>
+	
+<!-- 	<bean id="jpaVendorAdaptor" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+	</bean>
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter" ref="jpaVendorAdaptor" />
+	</bean>
+ -->
 	
 </beans>

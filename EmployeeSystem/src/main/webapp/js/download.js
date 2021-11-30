@@ -23,8 +23,7 @@
         downloadLink.style.display = "none"
         // HTML 가장 아래 부분에 링크를 붙여줍시다.
         document.body.appendChild(downloadLink)
-
-        // 클릭 이벤트를 발생시켜 실제로 브라우저가 '다운로드'하도록 만들어줍시다.
+        // 클릭 이벤트를 발생시켜 실제로 브라우저가 '다운로드'하도록
         downloadLink.click()
     }
 

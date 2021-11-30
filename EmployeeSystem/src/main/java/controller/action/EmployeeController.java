@@ -36,25 +36,25 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 	
-	@RequestMapping("/main.do")
+/*	@RequestMapping("/main.do")
 	public String getAllEmployeeList(HttpServletRequest request,EmployeeVO vo,Model model) throws IllegalStateException, IOException{
 		List<EmployeeVO> employeeList = employeeService.getAllEmployeeList(vo);
 		model.addAttribute("employeeList", employeeList);		
 		return "main.jsp";
-	}
-	@RequestMapping("/searchEmployee.do")
+	}*/
+	@RequestMapping("/main.do")
 	public String searchEmployee(HttpServletRequest request,EmployeeVO vo,Model model) throws IllegalStateException, IOException{
 		System.out.println("여기!!");
 		System.out.println("* vo : "+ vo);
-		List<EmployeeVO> employeeList = employeeService.searchEmployeeList(vo);
-		System.out.println("employeeList : " + employeeList );
+		
+		
 		if(vo.getCondition() == null) {
 			vo.setCondition("num");
 		}
 		if(vo.getKeyword() == null) {
 			vo.setKeyword("");
 		}
-		model.addAttribute("employeeList", employeeList);
+		model.addAttribute("employeeList", employeeService.getAllEmployeeList(vo));
 		return "main.jsp";
 	}
 	@RequestMapping("/insertEmployee.do")

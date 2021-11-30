@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="employeeDao">
+
+	<insert id="insertEmployee">
+	<![CDATA[
+		INSERT INTO EMPLOYEE (NUM,ENAME,PHONE,GRADE,EMAIL) VALUES ((SELECT NVL(MAX(NUM),999)+1 FROM EMPLOYEE),#{ename},#{phone},#{grade},#{email})
+	]]>
+	</insert>
+
+	<update id="updateEmployee">
+	<![CDATA[
+		UPDATE EMPLOYEE SET ENAME=#{ename}, GRADE=#{grade}, PHONE=#{phone},EMAIL=#{email} WHERE NUM=#{num}
+	]]>
+	</update>
+
+	<delete id="deleteEmployee">
+	<![CDATA[
+		DELETE FROM EMPLOYEE WHERE NUM=#{num}
+	]]>
+	</delete>
+
+	<select id="getEmployee">
+	<![CDATA[
+		SELECT * FROM EMPLOYEE WHERE NUM=#{num}
+	]]>
+	</select>
+	<select id="getAllEmployee"  resultType="employee">
+		SELECT * FROM EMPLOYEE WHERE 1=1
+		<if test="condition=='num'">
+			AND NUM LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition=='ename'">
+			AND ENAME LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition=='phone'">
+			AND PHONE LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition=='email'">
+			AND EMAIL LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="condition=='grade'">
+			AND GRADE LIKE '%'||#{keyword}||'%'
+		</if>
+		ORDER BY ENAME ASC
+	</select>
+</mapper>

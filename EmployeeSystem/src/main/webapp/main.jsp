@@ -12,7 +12,7 @@
 <body>
 <h1> 직원 LIST page</h1>
 <hr>
-	<form action="searchEmployee.do" method="post">
+	<form action="main.do" method="post">
 			<table>
 				<tr>
 					<td>
