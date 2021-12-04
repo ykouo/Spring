@@ -15,6 +15,21 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	<dependencies>
+	
+		<!-- POI 라이브러리 -엑셀다운 - -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.7</version>
+		</dependency>
+	
+	
+	
 		<!-- JPA구현체(하이버네이트.hibernate)중에 한개를 선택 -->
 <!-- 		<dependency>
 			<groupId>org.hibernate</groupId>
